@@ -3,7 +3,7 @@ import fs from 'fs';
 
 const rl = readline.createInterface({
   input: fs.createReadStream(process.argv[2]),
-  output: null,
+  output: process.stdout,
   terminal: false,
 }),
 composeSolution = [
@@ -19,7 +19,7 @@ rl.on('line', (line) => {
 
 rl.on('close', () => {
   const answer = composeSolution.reduce((value, nextFunc) => nextFunc(value), lines);
-  process.std.out(answer);
+  process.stdout.write(JSON.stringify(answer, null, 2));
 })
 /*
   extract chars
@@ -45,7 +45,6 @@ function handleGame(games) {
 }
 
 function tallyScores(games) {
-  console.log('games: ', games);
   const addTeamScore = (table, team, score) => {
           table[team] = Number(score);
           return table;
@@ -60,28 +59,29 @@ function tallyScores(games) {
     Object
     .keys(game)
     .forEach(team => {
-      if (scoresTable[team]) {
+      if (team in scoresTable) {
         scoresTable = updateTeamScore(scoresTable, team, game[team]);
-      } else {
+      }
+      else {
         scoresTable = addTeamScore(scoresTable, team, game[team]);
       }
-
-      return scoresTable;
+    });
+    return scoresTable;
     }, {});
-  }, {});
-  // const finalScores = Object.keys(game)
-  //   .reduce(scoresTable, team => {
-  //     if (scoresTable[team]) {
-  //       scoresTable = updateTeamScore(scoresTable, team, game[team]);
-  //     } else {
-  //       scoresTable = addTeamScore(scoresTable, team, game[team]);
-  //     }
-  //
-  //     return scoresTable;
-  //   }, {});
-  //   return finalScores;
 }
 
 function getAnswer(finalScores) {
   console.log('finalScores: ', finalScores);
+  const sortedScores = {};
+
+  Object
+  .keys(finalScores)
+  .sort((prev, next) => {
+    if (finalScores[prev] - finalScores[next] > 0) return (+1)
+    if (finalScores[prev] - finalScores[next] === 0) return 0
+    if (finalScores[prev] - finalScores[next] < 0) return (-1)
+  })
+  .forEach((key) => {
+    sortedScores[key] = finalScores[key];
+  })
 }
