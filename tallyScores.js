@@ -11,8 +11,7 @@ composeSolution = [
   'handleGame',
   'tallyPoints',
   'getAnswer'
-],
-scoresTable = {};
+];
 
 rl.on('line', (line) => {
   lines.concat(line);
@@ -29,40 +28,41 @@ rl.on('close', () => {
   return solution
 */
 
-const handleGame = gameStr =>
-  gameStr
-    .match(/\b[^\W\d]+\b|\d+/g)
-    .reduce((stats, stat, i) => {
-      const teams = Object.keys(stats);
-      if(i % 2 == 0 || i === 0) {
-        stats[stat] = 0;
-      } else {
-        stats[teams[teams.length - 1]] += Number(stat)
-      }
-      return stats;
-    }, {});
+const handleGame = gameStr => gameStr
+  .match(/\b[^\W\d]+\b|\d+/g)
+  .reduce((stats, stat, i) => {
+    const teams = Object.keys(stats);
+    if(i % 2 == 0 || i === 0) {
+      stats[stat] = 0;
+    } else {
+      stats[teams[teams.length - 1]] += Number(stat)
+    }
+    return stats;
+  }, {});
 
-const tallyPoints = (game, scoresTable) => {
+const tallyScores = (game) => {  // game = {Lions: 3, Snakes: 3}
   const addTeamScore = (table, team, score) => {
           table[team] = Number(score);
           return table;
         },
         updateTeamScore = (table, team, score) => {
           table[team] += Number(score)
-        },
-        game = {};
+          return table;
+        };
 
-  updatedTable = Object
-    .keys(game)
-    .forEach(team => {
+  const finalScores = Object.keys(game)
+    .reduce(scoresTable, team => {
       if (scoresTable[team]) {
-        updateTeamScore(scoresTable, team, game[team]);
+        scoresTable = updateTeamScore(scoresTable, team, game[team]);
       } else {
-        addTeamScore(scoresTable, team, game[team]);
+        scoresTable = addTeamScore(scoresTable, team, game[team]);
       }
-    })
+
+      return scoresTable;
+    }, {});
+    return finalScores;
 }
 
-const findWinner = (scoresTable) => {
-
+const findWinner = (finalScores) => {
+  console.log('finalScores: ', finalScores);
 }
