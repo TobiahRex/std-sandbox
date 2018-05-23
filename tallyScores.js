@@ -80,16 +80,16 @@ function getAnswer(finalScores) {
           console.log('team1name: ', team1name, '\nteam2name: ', team2name);
           console.log('/--------/');
           if (team1score - team2score > 0) {
-            let team1 = 
-            if(teams.sort()[0] !==);
+            if (teams.sort()[0] === prev) {
+              return +1;
+            }
+            return -1;
           }
           if (team1score - team2score < 0) {
-            if (team1name - team2name > 0) {
-              console.log('FIRE OTHER');
-              return (-1)
+            if (teams.sort()[0] === prev) {
+              return -1;
             }
-            // if (team1name - team2name < 0) return (+1)
-            return +1
+            return +1;
           }
           return 0
         };
