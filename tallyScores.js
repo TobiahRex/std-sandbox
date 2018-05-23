@@ -8,9 +8,9 @@ const rl = readline.createInterface({
 }),
 lines = [],
 composeSolution = [
-  'handleGame',
-  'tallyPoints',
-  'getAnswer'
+  handleGame,
+  tallyPoints,
+  getAnswer
 ];
 
 rl.on('line', (line) => {
@@ -28,7 +28,8 @@ rl.on('close', () => {
   return solution
 */
 
-const handleGame = gameStr => gameStr
+function handleGame(gameStr) {
+  return gameStr
   .match(/\b[^\W\d]+\b|\d+/g)
   .reduce((stats, stat, i) => {
     const teams = Object.keys(stats);
@@ -39,8 +40,9 @@ const handleGame = gameStr => gameStr
     }
     return stats;
   }, {});
+}
 
-const tallyScores = (game) => {  // game = {Lions: 3, Snakes: 3}
+function tallyScores(game) {  // game = {Lions: 3, Snakes: 3}
   const addTeamScore = (table, team, score) => {
           table[team] = Number(score);
           return table;
