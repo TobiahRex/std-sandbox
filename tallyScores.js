@@ -45,6 +45,7 @@ function handleGame(games) {
 }
 
 function tallyScores(games) {
+  console.log('games: ', games);
   const addTeamScore = (table, team, score) => {
           table[team] = Number(score);
           return table;
@@ -54,10 +55,11 @@ function tallyScores(games) {
           return table;
         };
 
-  const finalScores =
-  games.reduce((finalScores, game) => {
-    Object.keys(game)
-    .reduce(scoresTable, team => {
+  return games
+  .reduce((scoresTable, game) => {
+    Object
+    .keys(game)
+    .forEach(team => {
       if (scoresTable[team]) {
         scoresTable = updateTeamScore(scoresTable, team, game[team]);
       } else {
@@ -66,8 +68,18 @@ function tallyScores(games) {
 
       return scoresTable;
     }, {});
-    return finalScores;
   }, {});
+  // const finalScores = Object.keys(game)
+  //   .reduce(scoresTable, team => {
+  //     if (scoresTable[team]) {
+  //       scoresTable = updateTeamScore(scoresTable, team, game[team]);
+  //     } else {
+  //       scoresTable = addTeamScore(scoresTable, team, game[team]);
+  //     }
+  //
+  //     return scoresTable;
+  //   }, {});
+  //   return finalScores;
 }
 
 function getAnswer(finalScores) {
