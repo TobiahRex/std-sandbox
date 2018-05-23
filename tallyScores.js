@@ -6,49 +6,63 @@ const rl = readline.createInterface({
   output: null,
   terminal: false,
 }),
+lines = [],
 composeSolution = [
-  'parseString',
+  'handleGame',
   'tallyPoints',
-  'findWinner'
+  'getAnswer'
 ],
-hashTable = {};
+scoresTable = {};
 
 rl.on('line', (line) => {
-  const answer = composeSolution.reduce((value, nextFunc) => nextFunc(value), line);
-  process.std.out(answer);
+  lines.concat(line);
 });
 
+rl.on('close', () => {
+  const answer = composeSolution.reduce((value, nextFunc) => nextFunc(value), lines);
+  process.std.out(answer);
+})
 /*
   extract chars
   update or add to hashtable
-  reduce hashTable
+  reduce scoresTable
   return solution
 */
 
-const parseString = (str) => {
-  const isWord = char => char.test(/\b[^\W\d]+\b/g),
-        isNum = char => char.test(/\d+/g),
-
-
-  str.match(/\w+/g).forEach((char) => {
-    if (isWord) {
-      if (Object.keys(hashTable).includes(char)) {
-
+const handleGame = gameStr =>
+  gameStr
+    .match(/\b[^\W\d]+\b|\d+/g)
+    .reduce((stats, stat, i) => {
+      const teams = Object.keys(stats);
+      if(i % 2 == 0 || i === 0) {
+        stats[stat] = 0;
+      } else {
+        stats[teams[teams.length - 1]] += Number(stat)
       }
-    }
-  })
+      return stats;
+    }, {});
+
+const tallyPoints = (game, scoresTable) => {
+  const addTeamScore = (table, team, score) => {
+          table[team] = Number(score);
+          return table;
+        },
+        updateTeamScore = (table, team, score) => {
+          table[team] += Number(score)
+        },
+        game = {};
+
+  updatedTable = Object
+    .keys(game)
+    .forEach(team => {
+      if (scoresTable[team]) {
+        updateTeamScore(scoresTable, team, game[team]);
+      } else {
+        addTeamScore(scoresTable, team, game[team]);
+      }
+    })
 }
 
-const tallyPoints = (hashTable) => {
-  addTeamScore = (table, team, score) => {
-    table[team] = Number(score);
-    return table;
-  },
-  updateTeamScore = (table, team, score) => {
-    table[team] += Number(score)
-  }
-}
-
-const findWinner = (hashTable) => {
+const findWinner = (scoresTable) => {
 
 }
