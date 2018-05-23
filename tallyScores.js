@@ -71,17 +71,37 @@ function tallyScores(games) {
 }
 
 function getAnswer(finalScores) {
-  console.log('finalScores: ', finalScores);
-  const sortedScores = {};
+  const sortedScores = {},
+        sortTeams = (prev, next) => {
+          const team1score = finalScores[prev],
+                team2score = finalScores[next],
+                teams = [prev, next];
+
+          console.log('team1name: ', team1name, '\nteam2name: ', team2name);
+          console.log('/--------/');
+          if (team1score - team2score > 0) {
+            let team1 = 
+            if(teams.sort()[0] !==);
+          }
+          if (team1score - team2score < 0) {
+            if (team1name - team2name > 0) {
+              console.log('FIRE OTHER');
+              return (-1)
+            }
+            // if (team1name - team2name < 0) return (+1)
+            return +1
+          }
+          return 0
+        };
+
+  console.log(Object.keys(finalScores));
 
   Object
   .keys(finalScores)
-  .sort((prev, next) => {
-    if (finalScores[prev] - finalScores[next] > 0) return (+1)
-    if (finalScores[prev] - finalScores[next] === 0) return 0
-    if (finalScores[prev] - finalScores[next] < 0) return (-1)
-  })
+  .sort(sortTeams)
   .forEach((key) => {
+    console.log('key: ', key);
     sortedScores[key] = finalScores[key];
   })
+  return sortedScores;
 }
