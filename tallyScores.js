@@ -6,15 +6,15 @@ const rl = readline.createInterface({
   output: null,
   terminal: false,
 }),
-lines = [],
 composeSolution = [
   handleGame,
-  tallyPoints,
+  tallyScores,
   getAnswer
-];
+],
+lines = [];
 
 rl.on('line', (line) => {
-  lines.concat(line);
+  lines.push(line);
 });
 
 rl.on('close', () => {
@@ -28,21 +28,23 @@ rl.on('close', () => {
   return solution
 */
 
-function handleGame(gameStr) {
-  return gameStr
-  .match(/\b[^\W\d]+\b|\d+/g)
-  .reduce((stats, stat, i) => {
-    const teams = Object.keys(stats);
-    if(i % 2 == 0 || i === 0) {
-      stats[stat] = 0;
-    } else {
-      stats[teams[teams.length - 1]] += Number(stat)
-    }
-    return stats;
-  }, {});
+function handleGame(games) {
+  return games
+    .map(game => game
+      .match(/([^\W\d]+\s[^\W\d]+)|\d+|[^\W]+/g)
+      .reduce((stats, stat, i) => {
+        const teams = Object.keys(stats);
+        if(i % 2 == 0 || i === 0) {
+          stats[stat] = 0;
+        } else {
+          stats[teams[teams.length - 1]] += Number(stat);
+        }
+        return stats;
+      }, {})
+    );
 }
 
-function tallyScores(game) {  // game = {Lions: 3, Snakes: 3}
+function tallyScores(games) {
   const addTeamScore = (table, team, score) => {
           table[team] = Number(score);
           return table;
@@ -52,7 +54,9 @@ function tallyScores(game) {  // game = {Lions: 3, Snakes: 3}
           return table;
         };
 
-  const finalScores = Object.keys(game)
+  const finalScores =
+  games.reduce((finalScores, game) => {
+    Object.keys(game)
     .reduce(scoresTable, team => {
       if (scoresTable[team]) {
         scoresTable = updateTeamScore(scoresTable, team, game[team]);
@@ -63,8 +67,9 @@ function tallyScores(game) {  // game = {Lions: 3, Snakes: 3}
       return scoresTable;
     }, {});
     return finalScores;
+  }, {});
 }
 
-const findWinner = (finalScores) => {
+function getAnswer(finalScores) {
   console.log('finalScores: ', finalScores);
 }
