@@ -9,6 +9,9 @@ export const parseLine = games =>
                 .slice(0)
                 .match(/\d+/g),
         zipStats = (t, s) => ({
+          team1: {
+            name: [t[0]],
+          }
           [t[0]]: s[0],
           [t[1]]: s[1],
         });
@@ -17,14 +20,22 @@ export const parseLine = games =>
   });
 
 export const calcScores = games => {
-  const getScore = (gameTuple) => {
-          let aScore = 0,
-              bScore = 0;
-
-          
+  const getScore = ({ team1, team2 }) => {
+          if (team1.score === team2.score) return ({
+            [team1.name]: 1,
+            [team2.name]: 1,
+          });
+          if (team1.score > team2.score) return ({
+            [team1.name]: 3,
+            [team2.name]: 0,
+          });
+          return({
+            [team1.name]: 0,
+            [team2.name]: 3,
+          });
         },
         saveScore = ({ type, table, team, score }) => {
-          type === 'add' ? table[team] = Number(score) : table[team] += Number(score);
+          type === 'add' ? table[team] = score : table[team] += score;
           return table;
         }
 
