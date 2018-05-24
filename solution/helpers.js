@@ -64,7 +64,7 @@ export const calcScores = games => {
           team,
           allScores,
           type: 'add',
-          score: game[team],
+          score: gameScore[team],
         });
       }
     });
@@ -73,6 +73,7 @@ export const calcScores = games => {
 }
 
 export const findWinner = inputScores => {
+  console.log('inputScores: ', inputScores);
   const finalScores = {},
         sortTeams = (team1, team2) => {
           const team1score = inputScores[team1],
