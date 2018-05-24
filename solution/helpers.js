@@ -20,48 +20,52 @@ export const parseLine = games =>
   });
 
 export const calcScores = games => {
-  const getScore = ({ team1, team2 }) => {
+  const getGameScore = ({ team1, team2 }) => {
           if (team1.score === team2.score) return ({
             [team1.name]: 1,
             [team2.name]: 1,
           });
+
           if (team1.score > team2.score) return ({
             [team1.name]: 3,
             [team2.name]: 0,
           });
+
           return({
             [team1.name]: 0,
             [team2.name]: 3,
           });
         },
-        saveScore = ({ type, table, team, score }) => {
-          type === 'add' ? table[team] = score : table[team] += score;
-          return table;
+        saveScore = ({ type, allScores, team, score }) => {
+          type === 'add' ? allScores[team] = score : allScores[team] += score;
+          return allScores;
         }
 
   return games
-  .reduce((scoresTable, game) => {
+  .reduce((allScores, game) => {
+    const gameScore = getGameScore(game);
+
     Object
-    .keys(game)
+    .keys(gameScore)
     .forEach(team => {
-      if (team in scoresTable) {
-        scoresTable = saveScore({
-          type: 'update',
-          table: scoresTable,
+      if (team in allScores) {
+        allScores = saveScore({
           team,
-          score: game[team],
+          allScores,
+          type: 'update',
+          score: gameScore[team],
         });
       }
       else {
-        scoresTable = saveScore({
-          type: 'add',
-          table: scoresTable,
+        allScores = saveScore({
           team,
+          allScores,
+          type: 'add',
           score: game[team],
         });
       }
     });
-    return scoresTable;
+    return allScores;
     }, {});
 }
 
