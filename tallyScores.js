@@ -27,15 +27,19 @@ function handleGame(games) {
   console.log('games: ', games);
   const x = games
   .map(game => {
-    let teams = game
+    const teams = game
                 .slice(0)
                 .split(/\s\d+,\s|\s\d+/g)
                 .slice(0, 2),
         scores = game
                 .slice(0)
-                .match(/\d+/g);
-
-  })
+                .match(/\d+/g),
+        zipStats = (t, s) => ({
+          [t][0]: s[0],
+          [t][1]: s[1],
+        });
+      return zipStats(teams, scores);
+  });
 
   console.log('x: ', x);
 
