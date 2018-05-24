@@ -21,12 +21,6 @@ rl.on('close', () => {
   const answer = composeSolution.reduce((value, nextFunc) => nextFunc(value), lines);
   process.stdout.write(JSON.stringify(answer, null, 2));
 })
-/*
-  extract chars
-  update or add to hashtable
-  reduce scoresTable
-  return solution
-*/
 
 function handleGame(games) {
   return games
@@ -45,14 +39,10 @@ function handleGame(games) {
 }
 
 function tallyScores(games) {
-  const addTeamScore = (table, team, score) => {
-          table[team] = Number(score);
+  const saveScore = ({ type, table, team, score }) => {
+          type === 'add' ? table[team] = Number(score) : table[team] += Number(score);
           return table;
-        },
-        updateTeamScore = (table, team, score) => {
-          table[team] += Number(score)
-          return table;
-        };
+        }
 
   return games
   .reduce((scoresTable, game) => {
@@ -60,10 +50,20 @@ function tallyScores(games) {
     .keys(game)
     .forEach(team => {
       if (team in scoresTable) {
-        scoresTable = updateTeamScore(scoresTable, team, game[team]);
+        scoresTable = saveScore({
+          type: 'update',
+          table: scoresTable,
+          team,
+          score: game[team],
+        });
       }
       else {
-        scoresTable = addTeamScore(scoresTable, team, game[team]);
+        scoresTable = saveScore({
+          type: 'add',
+          table: scoresTable,
+          team,
+          score: game[team],
+        });
       }
     });
     return scoresTable;
@@ -74,33 +74,21 @@ function getAnswer(finalScores) {
   const sortedScores = {},
         sortTeams = (prev, next) => {
           const team1score = finalScores[prev],
-                team2score = finalScores[next],
-                teams = [prev, next];
+                team2score = finalScores[next];
 
-          console.log('team1name: ', team1name, '\nteam2name: ', team2name);
-          console.log('/--------/');
-          if (team1score - team2score > 0) {
-            if (teams.sort()[0] === prev) {
-              return +1;
-            }
-            return -1;
-          }
-          if (team1score - team2score < 0) {
-            if (teams.sort()[0] === prev) {
-              return -1;
-            }
-            return +1;
-          }
-          return 0
+          if (team1score - team2score > 0) return -1;
+          if (team1score - team2score < 0) return +1;
+          if (prev.charCodeAt(0) - next.charCodeAt(0) > 0) return +1;
+          if (prev.charCodeAt(0) - next.charCodeAt(0) > 0) return -1;
+          return 0;
         };
 
-  console.log(Object.keys(finalScores));
+  // console.log(Object.keys(finalScores));
 
   Object
   .keys(finalScores)
   .sort(sortTeams)
   .forEach((key) => {
-    console.log('key: ', key);
     sortedScores[key] = finalScores[key];
   })
   return sortedScores;
