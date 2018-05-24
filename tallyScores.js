@@ -8,9 +8,9 @@ const rl = readline.createInterface({
   terminal: false,
 }),
 composeSolution = [
-  handleGame,
-  // tallyScores,
-  // getAnswer
+  parseGame,
+  tallyScores,
+  getAnswer
 ],
 lines = [];
 
@@ -23,9 +23,8 @@ rl.on('close', () => {
   process.stdout.write(JSON.stringify(answer, null, 2));
 })
 
-function handleGame(games) {
-  console.log('games: ', games);
-  const x = games
+function parseGame(games) {
+  return games
   .map(game => {
     const teams = game
                 .slice(0)
@@ -35,27 +34,12 @@ function handleGame(games) {
                 .slice(0)
                 .match(/\d+/g),
         zipStats = (t, s) => ({
-          [t][0]: s[0],
-          [t][1]: s[1],
+          [t[0]]: s[0],
+          [t[1]]: s[1],
         });
+
       return zipStats(teams, scores);
   });
-
-  console.log('x: ', x);
-
-  // return games
-  //   .map(game => game
-  //     .match(/([^\W\d]+\s[^\W\d]+)|\d+|[^\W]+/g)
-  //     .reduce((stats, stat, i) => {
-  //       const teams = Object.keys(stats);
-  //       if(i % 2 == 0 || i === 0) {
-  //         stats[stat] = 0;
-  //       } else {
-  //         stats[teams[teams.length - 1]] += Number(stat);
-  //       }
-  //       return stats;
-  //     }, {})
-  //   );
 }
 
 function tallyScores(games) {
