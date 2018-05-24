@@ -1,5 +1,6 @@
 import readline from 'readline';
 import fs from 'fs';
+import helperFuncs from './helpers';
 
 const rl = readline.createInterface({
   input: fs.createReadStream(process.argv[2]),
@@ -26,11 +27,14 @@ function handleGame(games) {
   console.log('games: ', games);
   const x = games
   .map(game => {
-    let teams =
-    game
-    .slice(0)
-    .split(/\s\d+,\s|\s\d+/g)
-    .slice(0, 2)
+    let teams = game
+                .slice(0)
+                .split(/\s\d+,\s|\s\d+/g)
+                .slice(0, 2),
+        scores = game
+                .slice(0)
+                .match(/\d+/g);
+
   })
 
   console.log('x: ', x);
