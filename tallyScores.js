@@ -8,8 +8,8 @@ const rl = readline.createInterface({
 }),
 composeSolution = [
   handleGame,
-  tallyScores,
-  getAnswer
+  // tallyScores,
+  // getAnswer
 ],
 lines = [];
 
@@ -23,19 +23,26 @@ rl.on('close', () => {
 })
 
 function handleGame(games) {
-  return games
-    .map(game => game
-      .match(/([^\W\d]+\s[^\W\d]+)|\d+|[^\W]+/g)
-      .reduce((stats, stat, i) => {
-        const teams = Object.keys(stats);
-        if(i % 2 == 0 || i === 0) {
-          stats[stat] = 0;
-        } else {
-          stats[teams[teams.length - 1]] += Number(stat);
-        }
-        return stats;
-      }, {})
-    );
+  const x = games
+  .map(game => game
+    .split(/\d/)
+  )
+
+  console.log('x: ', x);
+
+  // return games
+  //   .map(game => game
+  //     .match(/([^\W\d]+\s[^\W\d]+)|\d+|[^\W]+/g)
+  //     .reduce((stats, stat, i) => {
+  //       const teams = Object.keys(stats);
+  //       if(i % 2 == 0 || i === 0) {
+  //         stats[stat] = 0;
+  //       } else {
+  //         stats[teams[teams.length - 1]] += Number(stat);
+  //       }
+  //       return stats;
+  //     }, {})
+  //   );
 }
 
 function tallyScores(games) {
@@ -70,26 +77,24 @@ function tallyScores(games) {
     }, {});
 }
 
-function getAnswer(finalScores) {
-  const sortedScores = {},
-        sortTeams = (prev, next) => {
-          const team1score = finalScores[prev],
-                team2score = finalScores[next];
+function getAnswer(inputScores) {
+  const finalScores = {},
+        sortTeams = (team1, team2) => {
+          const team1score = inputScores[team1],
+                team2score = inputScores[team2];
 
           if (team1score - team2score > 0) return -1;
           if (team1score - team2score < 0) return +1;
-          if (prev.charCodeAt(0) - next.charCodeAt(0) > 0) return +1;
-          if (prev.charCodeAt(0) - next.charCodeAt(0) > 0) return -1;
+          if (team1.charCodeAt(0) - team2.charCodeAt(0) > 0) return +1;
+          if (team1.charCodeAt(0) - team2.charCodeAt(0) < 0) return -1;
           return 0;
         };
 
-  // console.log(Object.keys(finalScores));
-
   Object
-  .keys(finalScores)
+  .keys(inputScores)
   .sort(sortTeams)
   .forEach((key) => {
-    sortedScores[key] = finalScores[key];
+    finalScores[key] = inputScores[key];
   })
-  return sortedScores;
+  return finalScores;
 }

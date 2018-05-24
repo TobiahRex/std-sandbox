@@ -1,12 +1,9 @@
-const game = 'Lions 3, Snakes 3'
-  .match(/\b[^\W\d]+\b|\d+/g)
-  .reduce((stats, stat, i) => {
-    const teams = Object.keys(stats);
-    if(i % 2 == 0 || i === 0) {
-      stats[stat] = 0;
-    } else {
-      stats[teams[teams.length - 1]] += Number(stat)
-    }
-    return stats;
-  }, {});
-  console.log(game);
+const game = `Tarantulas 1, FC Awesome 0
+Lions 3, Snakes 3
+Lions 1, FC Awesome 1
+Tarantulas 3, Snakes 1
+Onions 4, Cabbage 4,
+Lions 4, Grouches 0
+`
+.split(/\d/g)
+console.log(game);
