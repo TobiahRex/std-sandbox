@@ -9,8 +9,9 @@ const rl = readline.createInterface({
 }),
 composeSolution = [
   parseGame,
-  tallyScores,
-  getAnswer
+  calcScores,
+  getWinner,
+  finalAnswer,
 ],
 lines = [];
 
@@ -20,7 +21,7 @@ rl.on('line', (line) => {
 
 rl.on('close', () => {
   const answer = composeSolution.reduce((value, nextFunc) => nextFunc(value), lines);
-  process.stdout.write(JSON.stringify(answer, null, 2));
+  process.stdout.write(answer);
 })
 
 function parseGame(games) {
@@ -42,7 +43,7 @@ function parseGame(games) {
   });
 }
 
-function tallyScores(games) {
+function calcScores(games) {
   const saveScore = ({ type, table, team, score }) => {
           type === 'add' ? table[team] = Number(score) : table[team] += Number(score);
           return table;
@@ -74,7 +75,7 @@ function tallyScores(games) {
     }, {});
 }
 
-function getAnswer(inputScores) {
+function getWinner(inputScores) {
   const finalScores = {},
         sortTeams = (team1, team2) => {
           const team1score = inputScores[team1],
@@ -94,4 +95,16 @@ function getAnswer(inputScores) {
     finalScores[key] = inputScores[key];
   })
   return finalScores;
+}
+
+function finalAnswer(scores) {
+  return Object
+  .keys(scores)
+  .reduce((str, nextTeam, i) => {
+    const score = scores[nextTeam],
+      suffix = (s) => s > 1 ? 'pts' : 'pt';
+
+    return str += `
+    ${i + 1}. ${nextTeam}, ${score} ${suffix(score)}`;
+  }, '');
 }
