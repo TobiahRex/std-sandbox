@@ -10,10 +10,13 @@ export const parseLine = games =>
                 .match(/\d+/g),
         zipStats = (t, s) => ({
           team1: {
-            name: [t[0]],
+            name: t[0],
+            score: Number(s[0]),
+          },
+          team2: {
+            name: t[1],
+            score: Number(s[1]),
           }
-          [t[0]]: s[0],
-          [t[1]]: s[1],
         });
 
       return zipStats(teams, scores);
