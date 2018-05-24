@@ -1,31 +1,5 @@
-import readline from 'readline';
-import fs from 'fs';
-import helperFuncs from './helpers';
-
-const rl = readline.createInterface({
-  input: fs.createReadStream(process.argv[2]),
-  output: process.stdout,
-  terminal: false,
-}),
-composeSolution = [
-  parseGame,
-  calcScores,
-  getWinner,
-  finalAnswer,
-],
-lines = [];
-
-rl.on('line', (line) => {
-  lines.push(line);
-});
-
-rl.on('close', () => {
-  const answer = composeSolution.reduce((value, nextFunc) => nextFunc(value), lines);
-  process.stdout.write(answer);
-})
-
-function parseGame(games) {
-  return games
+export const parseLine = games =>
+  games
   .map(game => {
     const teams = game
                 .slice(0)
@@ -41,10 +15,15 @@ function parseGame(games) {
 
       return zipStats(teams, scores);
   });
-}
 
-function calcScores(games) {
-  const saveScore = ({ type, table, team, score }) => {
+export const calcScores = games => {
+  const getScore = (gameTuple) => {
+          let aScore = 0,
+              bScore = 0;
+
+          
+        },
+        saveScore = ({ type, table, team, score }) => {
           type === 'add' ? table[team] = Number(score) : table[team] += Number(score);
           return table;
         }
@@ -75,7 +54,7 @@ function calcScores(games) {
     }, {});
 }
 
-function getWinner(inputScores) {
+export const findWinner = inputScores => {
   const finalScores = {},
         sortTeams = (team1, team2) => {
           const team1score = inputScores[team1],
@@ -97,14 +76,17 @@ function getWinner(inputScores) {
   return finalScores;
 }
 
-function finalAnswer(scores) {
-  return Object
+export const writeAnswer = scores =>
+  Object
   .keys(scores)
   .reduce((str, nextTeam, i) => {
     const score = scores[nextTeam],
-      suffix = (s) => s > 1 ? 'pts' : 'pt';
+          suffix = (s) => {
+            if (1 > s || s > 1) return 'pts';
+            return 'pt';
+          };
 
-    return str += `
-    ${i + 1}. ${nextTeam}, ${score} ${suffix(score)}`;
+    return str += `<nl>${i + 1}. ${nextTeam}, ${score} ${suffix(score)}`
+      .split('<nl>')
+      .join('\n');
   }, '');
-}
