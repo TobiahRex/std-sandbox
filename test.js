@@ -1,9 +1,11 @@
-const game = `Tarantulas 1, FC Awesome 0
-Lions 3, Snakes 3
-Lions 1, FC Awesome 1
-Tarantulas 3, Snakes 1
-Onions 4, Cabbage 4,
-Lions 4, Grouches 0
-`
-.split(/\d/g)
-console.log(game);
+const teams = `Tarantulas 1, FC Awesome 0`
+.slice(0)
+.split(/\s\d+,\s|\s\d+/g)
+.slice(0, 2)
+console.log(teams);
+
+const scores = `Tarantulas 1, FC Awesome 0`
+.slice(0)
+.match(/\d+/g)
+// .slice(0, 2)
+console.log(scores);

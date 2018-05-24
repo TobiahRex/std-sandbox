@@ -23,10 +23,15 @@ rl.on('close', () => {
 })
 
 function handleGame(games) {
+  console.log('games: ', games);
   const x = games
-  .map(game => game
-    .split(/\d/)
-  )
+  .map(game => {
+    let teams =
+    game
+    .slice(0)
+    .split(/\s\d+,\s|\s\d+/g)
+    .slice(0, 2)
+  })
 
   console.log('x: ', x);
 
