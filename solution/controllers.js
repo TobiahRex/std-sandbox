@@ -9,8 +9,10 @@ new Promise((resolve, reject) => {
 });
 
 /**
-* 1) Reive collection of strings
-* 2) Create a new email & resolve with new email.
+* 1) map over collection of game strings,
+* 2) extract team name & team scores into their own respective arrays.
+* 3) create new tuple, with extracted data - assign respective values by index
+* 4) return object per map iteration.
 *
 * @param {array} games - Collection of strings, each string is 1 game containing 2 teams and 2 scores.
 *
