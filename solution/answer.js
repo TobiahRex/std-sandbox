@@ -1,9 +1,9 @@
 import rl from 'readline';
 import fs from 'fs';
 import {
-  parseLine,
-  calcScores,
-  findWinner,
+  parseGame,
+  getScores,
+  getWinner,
   writeAnswer,
 } from './helpers';
 
@@ -13,9 +13,9 @@ const readLine = rl.createInterface({
         terminal: false,
       }),
       composeSolution = [
-        parseLine,
-        calcScores,
-        findWinner,
+        parseGame,
+        getScores,
+        getWinner,
         writeAnswer,
       ],
       lines = [];
@@ -25,10 +25,7 @@ readLine.on('line', (line) => {
 });
 
 readLine.on('close', () => {
-  const answer = composeSolution
-    .reduce((value, nextFunc) =>
-      nextFunc(value), lines
-    );
+  const answer = composeSolution.reduce((value, nextFunc) => nextFunc(value), lines);
 
   process.stdout.write(`${answer}\n`);
 });

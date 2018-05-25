@@ -1,7 +1,5 @@
-Tarantulas 1, FC Awesome 0
 Lions 3, Snakes 3
+Tarantulas 1, FC Awesome 0
 Lions 1, FC Awesome 1
 Tarantulas 3, Snakes 1
-Onions 4, Cabbage 4,
-Lions 4, Grouches 0,
-Three Word Team 9, Four Word Team Team 8
+Lions 4, Grouches 0

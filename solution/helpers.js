@@ -1,14 +1,16 @@
-export const parseLine = games =>
+export const parseGame = games =>
   games
-  .map(game => {
-    const teams = game
+  .map(gameStr => {
+    const teams = gameStr
                 .slice(0)
                 .split(/\s\d+,\s|\s\d+/g)
                 .slice(0, 2),
-        scores = game
+
+        scores = gameStr
                 .slice(0)
                 .match(/\d+/g),
-        zipStats = (t, s) => ({
+
+        parsedStat = (t, s) => ({
           team1: {
             name: t[0],
             score: Number(s[0]),
@@ -19,10 +21,10 @@ export const parseLine = games =>
           }
         });
 
-      return zipStats(teams, scores);
+      return parsedStat(teams, scores);
   });
 
-export const calcScores = games => {
+export const getScores = games => {
   const getGameScore = ({ team1, team2 }) => {
           if (team1.score === team2.score) return ({
             [team1.name]: 1,
@@ -72,8 +74,7 @@ export const calcScores = games => {
     }, {});
 }
 
-export const findWinner = inputScores => {
-  console.log('inputScores: ', inputScores);
+export const getWinner = inputScores => {
   const finalScores = {},
         sortTeams = (team1, team2) => {
           const team1score = inputScores[team1],
