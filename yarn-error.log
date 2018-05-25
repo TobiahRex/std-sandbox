@@ -1,0 +1,43 @@
+Arguments: 
+  /Users/BICKLEY/.nvm/versions/node/v10.2.1/bin/node /usr/local/bin/yarn
+
+PATH: 
+  /Users/BICKLEY/.nvm/versions/node/v10.2.1/bin:/usr/local/mongodb/bin/:/Users/BICKLEY/Library/Android/android-sdk-macosx/platform-tools:/Users/BICKLEY/Library/Android/android-sdk-macosx/tools:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/mongodb/bin/:/Users/BICKLEY/Library/Android/android-sdk-macosx/platform-tools:/Users/BICKLEY/Library/Android/android-sdk-macosx/tools
+
+Yarn version: 
+  1.6.0
+
+Node version: 
+  10.2.1
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: getaddrinfo ENOTFOUND registry.yarnpkg.com registry.yarnpkg.com:443
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:50:26)
+
+npm manifest: 
+  {
+    "name": "std-sandbox",
+    "version": "1.0.0",
+    "description": "Read/Write CLI cmds using JS",
+    "main": "stdRWR.js",
+    "scripts": {
+      "test": "mocha --no-deprecation --compilers js:babel-core/register './test/**/*.spec.js'"
+    },
+    "keywords": [],
+    "author": "Tobiah Rex",
+    "license": "ISC",
+    "dependencies": {
+      "babel-cli": "^6.18.0",
+      "babel-core": "^6.18.2",
+      "babel-preset-env": "^1.7.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

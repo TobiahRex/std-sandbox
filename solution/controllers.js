@@ -1,3 +1,21 @@
+export const start = (helpers) =>
+new Promise((resolve, reject) => {
+  process.stdout.write('Please provide the file path for all team scores: ');
+  process.stdin.once('data', (filePath) => {
+    process.stdout.write(`Thank you. Generating solution for file: ${filePath.toString().trim()} ...`);
+    resolve(({ filePath, ...helpers }));
+  });
+  process.exit();
+});
+
+/**
+* 1) Reive collection of strings
+* 2) Create a new email & resolve with new email.
+*
+* @param {array} games - Collection of strings, each string is 1 game containing 2 teams and 2 scores.
+*
+* @return {array} - Collection of objects: { <team1>: <score1>, <team2>: <score2> }
+*/
 export const parseGame = games =>
   games
   .map(gameStr => {
