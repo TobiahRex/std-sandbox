@@ -1,11 +1,7 @@
 import assert from 'assert';
-import {
-  start,
-  parseGame,
-  getScores,
-  getAnswer,
-  writeAnswer,
-} from '../solution/controllers';
+import controllers from '../solution';
+
+console.log('controllers: ', controllers);
 
 describe('Function "start" Test', () => {
   it('Should receive string input from user via CLI.');
