@@ -5,7 +5,7 @@
   "main": "stdRWR.js",
   "scripts": {
     "test": "mocha --no-deprecation --compilers js:babel-core/register './test/**/*.spec.js'",
-    "start": "babel-node solution/"
+    "start": "babel-node solution/main.js"
   },
   "keywords": [],
   "author": "Tobiah Rex",
