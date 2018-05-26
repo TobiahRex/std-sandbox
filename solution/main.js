@@ -1,9 +1,9 @@
 import rl from 'readline';
 import fs from 'fs';
-import * as cFuncs from './controllers';
 import path from 'path';
 import colors from 'colors';
-import controllers from './';
+
+import * as controllers from './';
 
 controllers
 .start(controllers)

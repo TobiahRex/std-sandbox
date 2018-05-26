@@ -49,7 +49,8 @@ export const parseGame = games =>
           }
         });
 
-      return parsedStat(teams, scores);
+      // return parsedStat(teams, scores);
+      return ('')
   });
 
   /**
