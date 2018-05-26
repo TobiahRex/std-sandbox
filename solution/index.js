@@ -2,6 +2,7 @@ import rl from 'readline';
 import fs from 'fs';
 import * as cFuncs from './controllers';
 import path from 'path';
+import colors from 'colors';
 
 
 cFuncs.start(cFuncs)
@@ -26,14 +27,13 @@ cFuncs.start(cFuncs)
   lines = [];
 
   readLine.on('line', (line) => {
-    console.log('LINE: ', line);
     lines.push(line);
   });
 
   readLine.on('close', () => {
     const answer = composeSolution.reduce((value, nextFunc) => nextFunc(value), lines);
 
-    process.stdout.write(`${answer}\n`);
+    process.stdout.write(`${answer}\n\n`.cyan);
     process.exit();
   });
 
@@ -45,26 +45,3 @@ cFuncs.start(cFuncs)
 .catch((e) => {
   console.log('error: ', e);
 });
-
-// const readLine = rl.createInterface({
-//         input: fs.createReadStream(process.argv[2]),
-//         output: process.stdout,
-//         terminal: true,
-//       }),
-//       composeSolution = [
-//         parseGame,
-//         getScores,
-//         getWinner,
-//         writeAnswer,
-//       ],
-//       lines = [];
-
-// readLine.on('line', (line) => {
-//   lines.push(line);
-// });
-//
-// readLine.on('close', () => {
-//   const answer = composeSolution.reduce((value, nextFunc) => nextFunc(value), lines);
-//
-//   process.stdout.write(`${answer}\n`);
-// });

@@ -1,9 +1,9 @@
 export const start = (helpers) =>
 new Promise((resolve, reject) => {
-  process.stdout.write('\n\nPlease provide the relative file path for all team scores: \nEXAMPLE: ./scores.txt \n>> ');
+  process.stdout.write('\n\nPlease provide the relative file path for all team scores: \nEXAMPLE: ./scores.txt \n>> '.white);
   process.stdin.once('data', (filePath) => {
     const file = filePath.toString('utf8').trim();
-    console.log(`Thank you. Generating solution for file: "${file}" ...\n`);
+    console.log(`Thank you. Generating solution for file: ${file.cyan} \n`.white);
     resolve(({ file, ...helpers }));
   });
 });
