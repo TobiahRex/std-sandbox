@@ -4,7 +4,8 @@
   "description": "Read/Write CLI cmds using JS",
   "main": "stdRWR.js",
   "scripts": {
-    "test": "mocha --no-deprecation --compilers js:babel-core/register './test/**/*.spec.js'"
+    "test": "mocha --no-deprecation --compilers js:babel-core/register './test/**/*.spec.js'",
+    "start": "babel-node solution/"
   },
   "keywords": [],
   "author": "Tobiah Rex",
@@ -13,5 +14,8 @@
     "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
     "babel-preset-env": "^1.7.0"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0"
   }
 }

@@ -1,11 +1,11 @@
 export const start = (helpers) =>
 new Promise((resolve, reject) => {
-  process.stdout.write('Please provide the file path for all team scores: ');
+  process.stdout.write('\n\nPlease provide the relative file path for all team scores: \nEXAMPLE: ./scores.txt \n>> ');
   process.stdin.once('data', (filePath) => {
-    process.stdout.write(`Thank you. Generating solution for file: ${filePath.toString().trim()} ...`);
-    resolve(({ filePath, ...helpers }));
+    const file = filePath.toString('utf8').trim();
+    console.log(`Thank you. Generating solution for file: "${file}" ...\n`);
+    resolve(({ file, ...helpers }));
   });
-  process.exit();
 });
 
 /**
@@ -14,7 +14,7 @@ new Promise((resolve, reject) => {
 * 3) create new tuple, with extracted data - assign respective values by index
 * 4) return object per map iteration.
 *
-* @param {array} games - Collection of strings, each string is 1 game containing 2 teams and 2 scores.
+* @param {array} - Collection of strings, each string is 1 game containing 2 teams and 2 scores.
 *
 * @return {array} - Collection of objects: { <team1>: <score1>, <team2>: <score2> }
 */

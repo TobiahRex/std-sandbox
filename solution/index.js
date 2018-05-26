@@ -1,18 +1,19 @@
 import rl from 'readline';
 import fs from 'fs';
 import * as cFuncs from './controllers';
+import path from 'path';
 
 
-start(cFuncs)
+cFuncs.start(cFuncs)
 .then(({
-  filePath,
+  file,
   parseGame,
   getScores,
   getWinner,
   writeAnswer,
 }) => {
   const readLine = rl.createInterface({
-    input: fs.createReadStream(filePath),
+    input: fs.createReadStream(path.resolve(file)),
     output: process.stdout,
     terminal: false,
   }),
@@ -25,6 +26,7 @@ start(cFuncs)
   lines = [];
 
   readLine.on('line', (line) => {
+    console.log('LINE: ', line);
     lines.push(line);
   });
 
@@ -32,10 +34,17 @@ start(cFuncs)
     const answer = composeSolution.reduce((value, nextFunc) => nextFunc(value), lines);
 
     process.stdout.write(`${answer}\n`);
+    process.exit();
+  });
+
+  readLine.on('error', (error) => {
+    console.log('ERROR: ', error);
   });
 
 })
-.catch(process.stdout.write);
+.catch((e) => {
+  console.log('error: ', e);
+});
 
 // const readLine = rl.createInterface({
 //         input: fs.createReadStream(process.argv[2]),
