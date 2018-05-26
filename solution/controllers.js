@@ -1,18 +1,26 @@
+/**
+* Function: "start"
+* Requests user to input relative file path location of recorded games.
+*
+* @param {object} - Collection of helper functions - for a "pure funciton" pardigm.
+*
+* @return {object} - Collection of helper functions with added file path from user input.
+*/
+
 export const start = (helpers) =>
 new Promise((resolve, reject) => {
   process.stdout.write('\n\nPlease provide the relative file path for all team scores: \nEXAMPLE: ./scores.txt \n>> '.white);
   process.stdin.once('data', (filePath) => {
     const file = filePath.toString('utf8').trim();
-    console.log(`Thank you. Generating solution for file: ${file.cyan} \n`.white);
+    console.log(`\nThank you. Here's the solution for file: ${file.cyan} \n`.white);
     resolve(({ file, ...helpers }));
   });
 });
 
 /**
-* 1) map over collection of game strings,
-* 2) extract team name & team scores into their own respective arrays.
-* 3) create new tuple, with extracted data - assign respective values by index
-* 4) return object per map iteration.
+* Function: "parseGame"
+* maps across collection of game strings.
+* Parses each individual string into a new tuple with each team as the "key" and each teams game score as the "value".
 *
 * @param {array} - Collection of strings, each string is 1 game containing 2 teams and 2 scores.
 *
@@ -44,6 +52,15 @@ export const parseGame = games =>
       return parsedStat(teams, scores);
   });
 
+  /**
+  * Function: "getScore"
+  * reduce collection of individual game tuples into a single object with final scores per final scoring rules.
+  * uses helper function "getGameScore" that assigns final score per individual game results.
+  *
+  * @param {array} - Array of tuples with single game scores { <team1>: <score1>, <team2>: <score2> }
+  *
+  * @return {object} - Final tally of all teams and their final scores { <teamN>: <scoreN>, ... }
+  */
 export const getScores = games => {
   const getGameScore = ({ team1, team2 }) => {
           if (team1.score === team2.score) return ({
@@ -94,6 +111,15 @@ export const getScores = games => {
     }, {});
 }
 
+/**
+* Function: "getWinner"
+* Receives final object with all teams and their respective scores and sorts (descending) by score.
+* If a tie is found, sorts teams alphabetically.
+*
+* @param {object} - Unsorted { <teamN>: <scoreN>, ... }
+*
+* @return {object} - Sorted { <teamN>: <scoreN>, ... }
+*/
 export const getWinner = inputScores => {
   const finalScores = {},
         sortTeams = (team1, team2) => {
@@ -116,6 +142,14 @@ export const getWinner = inputScores => {
   return finalScores;
 }
 
+/**
+* Function: "writeAnswer"
+* Receives final sorted scores object and creates single string with results.
+*
+* @param {object} - { <teamN>: <scoreN>, ... }
+*
+* @return {string} - '<N.> <TeamN>, <ScoreN>, ...'
+*/
 export const writeAnswer = scores =>
   Object
   .keys(scores)
