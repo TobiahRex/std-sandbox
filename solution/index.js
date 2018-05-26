@@ -1,7 +1,1 @@
-export {
-  start,
-  parseGame,
-  getScores,
-  getAnswer,
-  writeAnswer,
-} from './controllers';
+export * as controllers from './controllers';

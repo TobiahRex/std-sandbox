@@ -3,9 +3,10 @@ import fs from 'fs';
 import * as cFuncs from './controllers';
 import path from 'path';
 import colors from 'colors';
+import controllers from './';
 
-
-cFuncs.start(cFuncs)
+controllers
+.start(controllers)
 .then(({
   file,
   parseGame,

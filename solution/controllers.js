@@ -7,13 +7,13 @@
 * @return {object} - Collection of helper functions with added file path from user input.
 */
 
-export const start = (helpers) =>
+export const start = controllers =>
 new Promise((resolve, reject) => {
   process.stdout.write('\n\nPlease provide the relative file path for all team scores: \nEXAMPLE: ./scores.txt \n>> '.white);
   process.stdin.once('data', (filePath) => {
     const file = filePath.toString('utf8').trim();
     console.log(`\nThank you. Here's the solution for file: ${file.cyan} \n`.white);
-    resolve(({ file, ...helpers }));
+    resolve(({ file, ...controllers }));
   });
 });
 
@@ -61,7 +61,7 @@ export const parseGame = games =>
   *
   * @return {object} - Final tally of all teams and their final scores { <teamN>: <scoreN>, ... }
   */
-export const getScores = games => {
+export const getScores = (games) => {
   const getGameScore = ({ team1, team2 }) => {
           if (team1.score === team2.score) return ({
             [team1.name]: 1,
@@ -120,7 +120,7 @@ export const getScores = games => {
 *
 * @return {object} - Sorted { <teamN>: <scoreN>, ... }
 */
-export const getWinner = inputScores => {
+export const getWinner = (inputScores) => {
   const finalScores = {},
         sortTeams = (team1, team2) => {
           const team1score = inputScores[team1],
