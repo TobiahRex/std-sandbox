@@ -8,7 +8,7 @@ describe('Function "start" Test', () => {
 describe('Function "parseGame" Test', () => {
   const collection = controllers.parseGame(['Lions 3, Snake 3']);
 
-  it('Function output should be collection.', () => {
+  it('Function output should be an <Array>.', () => {
     assert.equal(true, Array.isArray(collection));
   });
 
@@ -20,8 +20,18 @@ describe('Function "parseGame" Test', () => {
     assert.equal(results.indexOf(false), -1);
   });
 
-  it('Each object should have 2 teams and 2 scores.');
-  it('Each objects <value> should be a Number.');
+  it('Each object should have TWO teams and scores.', () => {
+    const objectLength = collection.map((game) => Object.keys(game).length === 2 ? true : false);
+    assert.equal(true, objectLength.indexOf(false) === -1);
+  });
+  it('Each objects <value> should be a Number.', () => {
+    const valueTypes = collection.map((results, game) =>
+      Object.keys(game).reduce((team) => {
+        results.push(typeof game[team] === 'number');
+        return results;
+      }, []));
+    assert.equal(true, valueTypes.indexOf(false) === -1);
+  });
 });
 describe('Function "getScores" Test', () => {
   it('Function param should be collection of objects.');

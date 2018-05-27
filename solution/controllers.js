@@ -6,16 +6,15 @@
 *
 * @return {object} - Collection of helper functions with added file path from user input.
 */
-
 export const start = controllers =>
-new Promise((resolve, reject) => {
-  process.stdout.write('\n\nPlease provide the relative file path for all team scores: \nEXAMPLE: ./scores.txt \n>> '.white);
-  process.stdin.once('data', (filePath) => {
-    const file = filePath.toString('utf8').trim();
-    console.log(`\nThank you. Here's the solution for file: ${file.cyan} \n`.white);
-    resolve(({ file, ...controllers }));
+  new Promise((resolve, reject) => {
+    process.stdout.write('\n\nPlease provide the relative file path for all team scores: \nEXAMPLE: ./scores.txt \n>> '.white);
+    process.stdin.once('data', (filePath) => {
+      const file = filePath.toString('utf8').trim();
+      console.log(`\nThank you. Here's the solution for file: ${file.cyan} \n`.white);
+      resolve(({ file, ...controllers }));
+    });
   });
-});
 
 /**
 * Function: "parseGame"
@@ -49,19 +48,18 @@ export const parseGame = games =>
           }
         });
 
-      // return parsedStat(teams, scores);
-      return ('')
+      return parsedStat(teams, scores);
   });
 
-  /**
-  * Function: "getScore"
-  * reduce collection of individual game tuples into a single object with final scores per final scoring rules.
-  * uses helper function "getGameScore" that assigns final score per individual game results.
-  *
-  * @param {array} - Array of tuples with single game scores { <team1>: <score1>, <team2>: <score2> }
-  *
-  * @return {object} - Final tally of all teams and their final scores { <teamN>: <scoreN>, ... }
-  */
+/**
+* Function: "getScore"
+* reduce collection of individual game tuples into a single object with final scores per final scoring rules.
+* uses helper function "getGameScore" that assigns final score per individual game results.
+*
+* @param {array} - Array of tuples with single game scores { <team1>: <score1>, <team2>: <score2> }
+*
+* @return {object} - Final tally of all teams and their final scores { <teamN>: <scoreN>, ... }
+*/
 export const getScores = (games) => {
   const getGameScore = ({ team1, team2 }) => {
           if (team1.score === team2.score) return ({
