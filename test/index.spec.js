@@ -41,7 +41,9 @@ describe('Function "parseGame" Test', () => {
 });
 
 describe('Function "getScores" Test', () => {
-  it('Function param should be collection of objects.');
+  it('Function param should be collection of objects.', () => {
+    
+  });
   it('Function output should be single object.');
   it('Output object keys should be strings.');
   it('Output object values should be numbers.');
