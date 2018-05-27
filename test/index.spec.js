@@ -1,7 +1,9 @@
 import assert from 'assert';
+import mockstd from 'mock-stdin';
 import * as controllers from '../solution';
 
 describe('Function "start" Test', () => {
+  const stdin = mockstd.stdin();
   it('Should receive string input from user via CLI.');
 })
 
