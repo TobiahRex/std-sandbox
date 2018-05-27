@@ -1,6 +1,6 @@
 /**
 * Function: "start"
-* Requests user to input relative file path location of recorded games.
+* Requests user to input relative file path location, of recorded games.
 *
 * @param {object} - Collection of helper functions - for a "pure funciton" pardigm.
 *
@@ -120,6 +120,7 @@ export const getScores = (games) => {
 * @return {object} - Sorted { <teamN>: <scoreN>, ... }
 */
 export const getWinner = (inputScores) => {
+  console.log('inputScores: ', inputScores);
   const finalScores = {},
         sortTeams = (team1, team2) => {
           const team1score = inputScores[team1],
@@ -127,8 +128,10 @@ export const getWinner = (inputScores) => {
 
           if (team1score - team2score > 0) return -1;
           if (team1score - team2score < 0) return +1;
-          if (team1.charCodeAt(0) - team2.charCodeAt(0) > 0) return +1;
-          if (team1.charCodeAt(0) - team2.charCodeAt(0) < 0) return -1;
+
+          const sortedTie = [team1, team2].sort();
+          if (sortedTie[0] === team1) return -1;
+          if (sortedTie[0] === team2) return +1;
           return 0;
         };
 
