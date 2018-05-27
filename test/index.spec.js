@@ -4,7 +4,17 @@ import * as controllers from '../solution';
 
 describe('Function "start" Test', () => {
   const stdin = mockstd.stdin();
-  it('Should receive string input from user via CLI.');
+
+  it('Should receive input from user via CLI.', () => {
+    process.nextTick(function mockResponse() {
+      stdin.send('./scores.txt');
+    });
+
+    return controllers.start(controllers)
+    .then((response) => {
+      assert.equal('./scores.txt', response.file);
+    })
+  });
 })
 
 describe('Function "parseGame" Test', () => {

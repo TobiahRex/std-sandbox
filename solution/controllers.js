@@ -120,7 +120,6 @@ export const getScores = (games) => {
 * @return {object} - Sorted { <teamN>: <scoreN>, ... }
 */
 export const getWinner = (inputScores) => {
-  console.log('inputScores: ', inputScores);
   const finalScores = {},
         sortTeams = (team1, team2) => {
           const team1score = inputScores[team1],
