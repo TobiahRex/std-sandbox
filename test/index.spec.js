@@ -70,7 +70,6 @@ describe('Function "getWinner" Test', () => {
     Grouches: 0,
   });
 
-  console.log('winnerObj: ', winnerObj);
   it('Function output should be a single Object.', () => {
     assert.equal(true, typeof winnerObj === 'object' && winnerObj !== null);
   });
@@ -88,5 +87,8 @@ describe('Function "writeAnswer" Test', () => {
   it('Function output should be single string.', () => {
     assert.equal('string', typeof answerStr);
   });
-  it('Output string should have "Answer" format.')
+  it('Output string should have "Answer" format.', () => {
+    const result = /\b\d+.\s[^\W]+(\s)+[^\W]+,\s\d+\s(pts|pt)|\b\d+.\s[^\W]+,\s\d+\s(pts|pt)/g.test(answerStr);
+    assert.equal(true, result);
+  })
 });
