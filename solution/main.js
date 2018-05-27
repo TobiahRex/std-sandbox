@@ -6,17 +6,13 @@ import * as controllers from './';
 
 
 /**
-* Main Control Flow
+* File: main.js
 * Calls "start" <see "start" func. desc. for more info>,
-* creates a read interface using node's core module "fs" to read scores file line by line.
-* each line s added individually to a collection "lines".
-* "lines", along with the control function "controllers", are passed to a reducer,
-* the reducer, uses functional programming methodology to waterfall the previous functions
-* output into the next functions input, until the final answer is found.
-*
-* @param {object} - Collection of helper functions - for a "pure funciton" pardigm.
-*
-* @return {object} - Collection of helper functions with added file path from user input.
+* creates a read interface using node's core module "fs" to read a scores file line by line.
+* Each line is added individually to a collection: "lines".
+* "lines", along with the control functions "controllers", are passed to a reducer,
+* that uses functional programming methodology to waterfall the previous functions
+* output into the next functions input, until the final answer is found and read back to the user.
 */
 controllers
 .start(controllers)
